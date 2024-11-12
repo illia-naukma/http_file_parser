@@ -1,0 +1,14 @@
+[package]
+name = "http_file_parser"
+version = "0.1.0"
+authors = ["Illia Tsymbal <illia.tsymbal@ukma.edu.ua>"]
+description = "A Rust-based parser for .http files, parsing HTTP request data using Pest and making parsed requests."
+edition = "2021"
+
+[dependencies]
+pest = "2.1"
+pest_derive = "2.1"
+clap = { version = "4", features = ["derive"] }
+reqwest = { version = "0.12.9", features = ["blocking", "json"] }
+thiserror = "2.0.3"
+anyhow = "1.0"

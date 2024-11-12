@@ -1,0 +1,20 @@
+### POST submit request
+POST https://eo7nilf42qb5b5e.m.pipedream.net HTTP/1.1
+Authorization: Bearer token123
+Content-Type: application/json
+
+{ "name": "Alice", "age": 30 }
+
+### GET profile request
+GET https://eo7nilf42qb5b5e.m.pipedream.net HTTP/1.1
+Accept: application/json
+
+### DELETE account request
+DELETE https://eo7nilf42qb5b5e.m.pipedream.net HTTP/1.1
+Authorization: Bearer token123
+
+### PUT profile request
+PUT https://eo7nilf42qb5b5e.m.pipedream.net HTTP/1.1
+Content-Type: application/json
+
+{ "name": "Alice", "age": 31 }

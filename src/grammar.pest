@@ -1,0 +1,76 @@
+/// The root rule for parsing an entire `.http` file. An `.http` file consists of
+/// multiple HTTP requests separated by optional delimiters. The file starts with
+/// `SOI` (start of input) and ends with `EOI` (end of input). Each request can
+/// include a request line, headers, and a body.
+http_file = { SOI ~ (delimiter | request)* ~ EOI}
+
+/// Represents an HTTP request, composed of a request line, an optional set of headers,
+/// a required newline, and an optional body. Each request specifies the HTTP method,
+/// URI, HTTP version, and optionally headers and body content.
+request = {
+	request_line ~
+    headers? ~
+    NEWLINE ~
+    body?
+}
+
+/// Separates different requests within an `.http` file. A delimiter begins with
+/// three `#` characters, followed by optional whitespace, an optional title, and
+/// one or more newlines. Delimiters help organize multiple requests for easier reading.
+delimiter = { "###" ~ whitespace* ~ title? ~ NEWLINE+ }
+
+/// A title associated with a delimiter, used to describe the purpose of the following
+/// request. The title may contain any characters except a newline, making it ideal for
+/// short, descriptive names or notes.
+title = { (!NEWLINE ~ ANY)+ }
+
+/// The request line in an HTTP request. Specifies the HTTP method (e.g., GET, POST),
+/// the URI (endpoint), and the HTTP version (e.g., HTTP/1.1). The request line must
+/// end with a newline and follows a standard format:
+/// `<METHOD> <URI> HTTP/<VERSION>`.
+request_line = _{ method ~ " "+ ~ uri ~ " "+ ~ "HTTP/" ~ version ~ NEWLINE }
+
+/// Represents the URI (Uniform Resource Identifier) in a request line, indicating
+/// the endpoint for the HTTP request. The URI can include any characters except whitespace,
+/// making it suitable for paths, query parameters, and additional URI components.
+uri = { (!whitespace ~ ANY)+ }
+
+/// Specifies the HTTP method for the request. This rule supports standard HTTP methods,
+/// including `GET`, `DELETE`, `POST`, and `PUT`. The method determines the action
+/// to be performed on the server (e.g., retrieving data, deleting resources).
+method = { ("GET" | "DELETE" | "POST" | "PUT") }
+
+/// Defines the HTTP version in the request line, typically represented as a numeric
+/// version such as `1.1` or `2.0`. This rule supports a combination of ASCII digits and
+/// periods to allow version notation like `HTTP/1.1`.
+version = { (ASCII_DIGIT | ".")+ }
+
+/// Represents whitespace characters, including spaces and tabs, used to separate
+/// elements within the request. Whitespace is often used for indentation or formatting
+/// within the HTTP file, particularly around delimiters and headers.
+whitespace = _{ " " | "\t" }
+
+/// Specifies one or more headers in the request. Headers provide additional information
+/// about the request, such as `Content-Type` or `Authorization`, and are optional. Each
+/// header is followed by a newline, and multiple headers may be defined.
+headers = { header+ }
+
+/// Represents a single header entry in the request, consisting of a header name, a colon,
+/// whitespace, and a header value, followed by a newline. Headers provide metadata or
+/// additional instructions for the HTTP request.
+header = { header_name ~ ":" ~ whitespace ~ header_value ~ NEWLINE }
+
+/// The name of a header, composed of any characters except colons or newlines. Examples
+/// include `Content-Type`, `Authorization`, and `User-Agent`. The header name must precede
+/// the colon and whitespace before the header value.
+header_name = { (!(NEWLINE | ":") ~ ANY)+ }
+
+/// The value of a header, which follows the header name and may contain any characters
+/// except newlines. Examples include `application/json` for `Content-Type` or a token for
+/// `Authorization`.
+header_value = { (!NEWLINE ~ ANY)+ }
+
+/// Represents the optional body of the request, containing data sent with the request,
+/// such as JSON or form data. The body can contain any characters except the delimiter
+/// sequence (`###`). A body is commonly used with POST and PUT methods.
+body = { (!delimiter ~ ANY)+ }
