@@ -94,20 +94,6 @@ impl HttpRequest {
     }
 }
 
-impl Display for HttpRequest {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?} {} HTTP/{}", self.method, self.url, self.version)?;
-        if !self.headers.is_empty() {
-            write!(f, " [")?;
-            for (k, v) in &self.headers {
-                write!(f, "{}: {}", k, v)?;
-            }
-            write!(f, "]")?;
-        }
-        Ok(())
-    }
-}
-
 #[derive(Debug)]
 pub struct HttpFile {
     pub requests: Vec<HttpRequest>,
@@ -122,19 +108,6 @@ impl HttpFile {
             .collect::<Result<Vec<_>, _>>()?;
 
         Ok(HttpFile { requests })
-    }
-}
-
-impl Display for HttpFile {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if self.requests.is_empty() {
-            writeln!(f, "No requests found")?;
-        } else {
-            for (i, req) in self.requests.iter().enumerate() {
-                writeln!(f, "#{}\n{}", i, req)?;
-            }
-        }
-        Ok(())
     }
 }
 
