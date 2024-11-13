@@ -11,7 +11,9 @@ use http_file_parser::request::make_request;
     author = "Your Name <your.email@example.com>",
     version = "1.0",
     about = "HTTP Request File Parser",
-    long_about = "This CLI parses .http files and allows you to make requests based on the parsed data."
+    long_about = "This CLI parses .http files and allows you to make requests based on the parsed data.",
+    disable_help_flag = true,
+    disable_help_subcommand = true
 )]
 struct Cli {
     #[command(subcommand)]
@@ -25,7 +27,7 @@ enum Commands {
         file: String,
     },
     Credits,
-    // help command is automatically added by clap
+    Help,
 }
 
 fn main() {
@@ -79,6 +81,22 @@ fn main() {
             println!("Version: 1.0");
             println!("Author: Illia Tsymbal <illia.tsymbal@ukma.edu.ua>");
             println!("This tool was developed for educational purposes to demonstrate parsing and handling of HTTP files using Rust.");
+        }
+        Commands::Help => {
+            println!("HTTP Request File Parser CLI");
+            println!();
+            println!("USAGE:");
+            println!("  http_file_parser <COMMAND>");
+            println!();
+            println!("COMMANDS:");
+            println!("  parse   Parses an HTTP file and makes requests based on parsed data.");
+            println!("          Options:");
+            println!("            --file <FILE>     Specify the path to the .http file to parse.");
+            println!();
+            println!("  credits Shows credits and authorship information.");
+            println!();
+            println!("  help    Displays this help information.");
+            println!();
         }
     }
 }
