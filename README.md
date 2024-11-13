@@ -1,6 +1,7 @@
 # HTTP File Parser
+- Crate: https://crates.io/crates/http_file_parser
+- Grammar Rules Docs: https://docs.rs/http_file_parser/latest/http_file_parser/parser/enum.Rule.html
 
-## Project Overview
 This project is a Rust-based utility for parsing `.http` files, which are commonly used to store HTTP requests in a structured format. By parsing these files, this tool allows automated processing of HTTP requests, useful in scenarios such as API testing.
 
 ### Example of an `.http` File
