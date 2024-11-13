@@ -4,6 +4,8 @@ version = "0.1.0"
 authors = ["Illia Tsymbal <illia.tsymbal@ukma.edu.ua>"]
 description = "A Rust-based parser for .http files, parsing HTTP request data using Pest and making parsed requests."
 edition = "2021"
+license = "MIT"
+readme = "README.md"
 
 [dependencies]
 pest = "2.1"
