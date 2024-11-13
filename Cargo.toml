@@ -1,6 +1,6 @@
 [package]
 name = "http_file_parser"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Illia Tsymbal <illia.tsymbal@ukma.edu.ua>"]
 description = "A Rust-based parser for .http files, parsing HTTP request data using Pest and making parsed requests."
 edition = "2021"
